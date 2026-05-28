@@ -2159,3 +2159,80 @@ h3 {
     max-width: 86%;
   }
 }
+
+@media (max-width: 768px) {
+  .contact-title,
+  .reviews-title,
+  .brand-title,
+  .services-cta-panel h2,
+  .section-title h2,
+  .review-shell h2,
+  .booking-panel h2,
+  h1,
+  h2 {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    font-size: clamp(36px, 2.7rem, 50px) !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    text-wrap: balance;
+    transform: none !important;
+  }
+
+  .contact-title,
+  .reviews-title,
+  .brand-title {
+    font-size: clamp(34px, 2.45rem, 44px) !important;
+    line-height: 1.04 !important;
+  }
+
+  .studio,
+  .reviews,
+  .booking {
+    overflow: hidden;
+  }
+
+  .studio-panel,
+  .review-shell,
+  .booking-panel,
+  .services-cta-panel {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .review-shell,
+  .booking-panel {
+    padding: clamp(22px, 6vw, 32px);
+  }
+}
+
+@media (max-width: 390px) {
+  .contact-title,
+  .reviews-title,
+  .brand-title,
+  .services-cta-panel h2,
+  .section-title h2,
+  .review-shell h2,
+  .booking-panel h2,
+  h1,
+  h2 {
+    font-size: clamp(32px, 2.18rem, 40px) !important;
+    line-height: 1.04 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .contact-title,
+  .reviews-title,
+  .brand-title {
+    font-size: clamp(30px, 2.02rem, 36px) !important;
+  }
+}
