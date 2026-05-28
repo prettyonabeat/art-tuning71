@@ -31,6 +31,7 @@
 html {
   scroll-behavior: smooth;
   width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -64,7 +65,8 @@ a {
   text-decoration: none;
 }
 
-img {
+img,
+video {
   display: block;
   max-width: 100%;
 }
@@ -380,8 +382,15 @@ body.intro-done .topbar {
 }
 
 .nav a:hover,
-.top-phone:hover {
+.top-phone:hover,
+.nav a[aria-current="page"],
+.mobile-menu a[aria-current="page"] {
   color: var(--ink);
+}
+
+.nav a[aria-current="page"],
+.mobile-menu a[aria-current="page"] {
+  opacity: 1;
 }
 
 .top-phone {
@@ -445,6 +454,10 @@ body.intro-done .topbar {
   border-bottom: 1px solid var(--line);
   font-size: 25px;
   font-weight: 900;
+}
+
+.mobile-menu a[aria-current="page"] {
+  border-color: rgba(255, 76, 84, 0.46);
 }
 
 .menu-open .mobile-menu {
@@ -579,6 +592,22 @@ h1 {
   border-color: rgba(255, 255, 255, 0.24);
   transform: translateY(-3px);
   filter: brightness(1.04);
+}
+
+.button:active,
+.service-card-link:active,
+.menu-button:active {
+  transform: translateY(0);
+}
+
+.button:focus-visible,
+.menu-button:focus-visible,
+.service-card-link:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid rgba(255, 76, 84, 0.82);
+  outline-offset: 3px;
 }
 
 .button.primary {
@@ -1661,41 +1690,57 @@ h3 {
 
 @media (max-width: 760px) {
   :root {
-    --page-gutter: 14px;
-    --wrap: calc(100dvw - 28px);
-    --duration-reveal: 0.86s;
-    --duration-hover: 0.48s;
+    --page-gutter: 16px;
+    --wrap: min(100%, calc(100vw - 32px));
+    --duration-reveal: 0.72s;
+    --duration-hover: 0.34s;
     --stagger: 44ms;
   }
 
   html,
   body {
-    width: 100dvw;
-    max-width: 100dvw;
-    overflow-x: clip;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   .topbar {
-    left: 14px;
+    left: 16px;
     right: auto;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    width: calc(100dvw - 28px);
+    grid-template-columns: minmax(0, auto) auto;
+    gap: 12px;
+    width: calc(100% - 32px);
     max-width: none;
+    min-height: 60px;
+    padding: 8px 10px;
     transform: none;
   }
 
   .menu-button {
     display: flex !important;
-    position: fixed !important;
-    inset: 24px auto auto calc(100svw - 72px) !important;
+    position: relative !important;
+    inset: auto !important;
     grid-column: auto;
+    justify-self: end;
     z-index: 120;
+    width: 44px;
+    height: 44px;
     background: rgba(255, 255, 255, 0.1);
+  }
+
+  .mobile-menu {
+    padding: 96px 16px max(18px, env(safe-area-inset-bottom));
+  }
+
+  .mobile-menu a:not(.button) {
+    min-height: 54px;
+    padding: 13px 2px;
+    font-size: clamp(22px, 7vw, 30px);
   }
 
 
   .hero {
-    min-height: 100svh;
+    min-height: 92svh;
     width: 100%;
     padding: 106px 0 24px;
   }
@@ -1769,18 +1814,19 @@ h3 {
   .hero-copy {
     width: 100%;
     max-width: none;
-    padding: 36px 0 8px;
+    padding: 24px 0 8px;
   }
 
   h1 {
-    max-width: 6.6ch;
-    font-size: clamp(40px, 13.2vw, 54px);
-    line-height: 0.92;
+    max-width: 100%;
+    font-size: clamp(38px, 13vw, 54px);
+    line-height: 0.96;
+    overflow-wrap: anywhere;
   }
 
   .services-hero-copy h1 {
     max-width: 100%;
-    font-size: clamp(40px, 12vw, 58px);
+    font-size: clamp(36px, 11.5vw, 54px);
     line-height: 1;
     overflow-wrap: anywhere;
   }
@@ -1822,7 +1868,7 @@ h3 {
   }
 
   .section {
-    padding: 70px 0;
+    padding: 64px 0;
   }
 
   h2 {
@@ -1846,7 +1892,17 @@ h3 {
   }
 
   .service-card {
-    min-height: 410px;
+    min-height: 0;
+  }
+
+  .service-card-media {
+    aspect-ratio: 4 / 3;
+  }
+
+  .service-card-link {
+    width: calc(100% - 16px);
+    min-height: 48px;
+    justify-content: center;
   }
 
   .services-cta-panel {
@@ -1878,15 +1934,34 @@ h3 {
     grid-column: auto;
   }
 
+  .footer {
+    gap: 22px;
+    padding-top: 36px;
+  }
+
+  .footer p {
+    font-size: 15px;
+  }
+
+  .footer a:not(.logo) {
+    min-height: 32px;
+    margin-bottom: 8px;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .toast {
+    right: 16px;
+    bottom: max(16px, env(safe-area-inset-bottom));
+    left: 16px;
+    max-width: none;
+  }
+
 }
 
 @media (max-width: 430px) {
-  .menu-button {
-    inset: 24px auto auto 318px !important;
-  }
-
   .logo strong {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .overline {
@@ -1910,16 +1985,41 @@ h3 {
   .masonry {
     grid-auto-rows: 330px;
   }
-}
 
-@media (max-width: 600px) {
-  .menu-button {
-    inset: 24px auto auto 318px !important;
+  .services-hero-panel {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
+  }
+
+  .services-hero-panel span {
+    margin: 0;
+    font-size: clamp(42px, 16vw, 64px);
+  }
+
+  .services-hero-panel p {
+    font-size: 14px;
+    line-height: 1.45;
   }
 }
 
 @media (max-width: 380px) {
-  .menu-button {
-    inset: 24px auto auto calc(100vw - 72px) !important;
+  :root {
+    --page-gutter: 14px;
+    --wrap: min(100%, calc(100vw - 28px));
+  }
+
+  .topbar {
+    left: 14px;
+    width: calc(100% - 28px);
+  }
+
+  .logo strong {
+    display: none;
+  }
+
+  .button {
+    min-height: 52px;
   }
 }
